@@ -7,6 +7,7 @@ import Nav from './layouts/nav'
 import Footer from './layouts/Footer'
 import MainView from './views/MainView.jsx'
 import CategoryView from './views/CategoryView.jsx'
+import ProductDetailView from './views/ProductDetailView.jsx'
 import LoginView from './views/LoginView.jsx'
 import RegisterView from './views/RegisterView.jsx'
 import AdminDashboard from './admin/AdminDashboard.jsx'
@@ -24,6 +25,7 @@ function App() {
       <Routes>
         <Route path="/" element={<MainView />} />
         <Route path="/category/:name" element={<CategoryView />} />
+        <Route path="/product/:id" element={<ProductDetailView />} />
         <Route path="/login" element={<LoginView />} />
         <Route path="/register" element={<RegisterView />} />
         <Route path="/admin" element={<AdminDashboard />} />

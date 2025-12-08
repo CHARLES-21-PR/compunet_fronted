@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { 
     Container, 
     Typography, 
@@ -21,6 +21,7 @@ import {
 
 function CategoryView() {
     const { name } = useParams();
+    const navigate = useNavigate();
     const [category, setCategory] = useState(null);
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -103,7 +104,7 @@ function CategoryView() {
                 </Container>
             </Box>
 
-            <Container maxWidth="lg">
+            <Container maxWidth={false} sx={{ px: { xs: 2, sm: 4, md: 6, lg: 8 } }}>
                 {products.length === 0 ? (
                     <Box sx={{ textAlign: 'center', py: 8 }}>
                         <Typography variant="h5" color="text.secondary" gutterBottom>
@@ -114,22 +115,33 @@ function CategoryView() {
                         </Button>
                     </Box>
                 ) : (
-                    <Grid container spacing={4}>
+                    <Box sx={{ 
+                        display: 'grid', 
+                        gridTemplateColumns: {
+                            xs: '1fr',
+                            sm: 'repeat(2, 1fr)',
+                            md: 'repeat(4, 1fr)'
+                        },
+                        gap: 3
+                    }}>
                         {products.map((product) => (
-                            <Grid item key={product.id} xs={12} sm={6} md={4} lg={3}>
-                                <Card sx={{ 
-                                    height: '100%', 
+                            <Card 
+                                key={product.id} 
+                                onClick={() => navigate(`/product/${product.id}`)}
+                                sx={{ 
                                     display: 'flex', 
                                     flexDirection: 'column',
                                     borderRadius: 4,
                                     transition: 'transform 0.3s, box-shadow 0.3s',
+                                    cursor: 'pointer',
                                     '&:hover': {
                                         transform: 'translateY(-8px)',
                                         boxShadow: '0 12px 24px rgba(0,0,0,0.1)'
                                     },
                                     position: 'relative',
                                     overflow: 'visible'
-                                }}>
+                                }}
+                            >
                                     {product.stock <= 0 && (
                                         <Chip 
                                             label="Agotado" 
@@ -212,9 +224,8 @@ function CategoryView() {
                                         </Button>
                                     </CardActions>
                                 </Card>
-                            </Grid>
                         ))}
-                    </Grid>
+                    </Box>
                 )}
             </Container>
         </Box>
