@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import { Container, Typography, Paper, Box, CircularProgress, Alert } from '@mui/material';
 
 function CategoryView() {
     const { name } = useParams();
@@ -8,7 +9,7 @@ function CategoryView() {
 
     useEffect(() => {
         setLoading(true);
-        fetch('http://localhost:8000/api/categories')
+        fetch('/api/categories')
             .then(res => {
                 if (!res.ok) {
                     throw new Error('Error al obtener las categorías');
@@ -29,16 +30,29 @@ function CategoryView() {
             });
     }, [name]);
 
-    if (loading) return <div style={{ padding: '20px', textAlign: 'center', minHeight: '60vh' }}>Cargando...</div>;
-    if (!category) return <div style={{ padding: '20px', textAlign: 'center', minHeight: '60vh' }}>Categoría "{name}" no encontrada</div>;
+    if (loading) return (
+        <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '60vh' }}>
+            <CircularProgress />
+        </Box>
+    );
+
+    if (!category) return (
+        <Container sx={{ mt: 4, minHeight: '60vh', textAlign: 'center' }}>
+            <Alert severity="warning">Categoría "{name}" no encontrada</Alert>
+        </Container>
+    );
 
     return (
-        <div className="category-view" style={{ padding: '20px', minHeight: '60vh' }}>
-            <h1>{category.name}</h1>
-            <div className="category-description">
-                <p>{category.description}</p>
-            </div>
-        </div>
+        <Container sx={{ mt: 4, mb: 4, minHeight: '60vh' }}>
+            <Paper elevation={3} sx={{ p: 4 }}>
+                <Typography variant="h3" component="h1" gutterBottom>
+                    {category.name}
+                </Typography>
+                <Typography variant="body1" color="text.secondary">
+                    {category.description}
+                </Typography>
+            </Paper>
+        </Container>
     );
 }
 export default CategoryView;

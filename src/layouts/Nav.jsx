@@ -1,6 +1,23 @@
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
+import { Menu, MenuItem, IconButton, Typography, Box, Avatar, Tooltip } from '@mui/material';
+import AccountCircle from '@mui/icons-material/AccountCircle';
 
 function Nav() {
+    const { user, logout } = useAuth();
+    const isAuthenticated = !!user;
+    const [anchorEl, setAnchorEl] = useState(null);
+    const open = Boolean(anchorEl);
+
+    const handleMenu = (event) => {
+        setAnchorEl(event.currentTarget);
+    };
+
+    const handleClose = () => {
+        setAnchorEl(null);
+    };
+
     return (    
         <>
         <div className="navegation">
@@ -77,6 +94,85 @@ function Nav() {
                         <Link to="/category/Nuestros clientes" className="menu_link menu_link--inside"><img className="icon2" src="img/a9.webp" alt="" />Nuestros clientes</Link>
                     </li>
                 </ul>
+            </div>
+
+            <div className="enlace">
+                <Box sx={{ display: 'flex', alignItems: 'center', textAlign: 'center', height: '100%', pr: 3 }}>
+                    <Tooltip title="Configuración de cuenta">
+                        <IconButton
+                            onClick={handleMenu}
+                            size="small"
+                            sx={{ ml: 0 }}
+                            aria-controls={open ? 'account-menu' : undefined}
+                            aria-haspopup="true"
+                            aria-expanded={open ? 'true' : undefined}
+                        >
+                            <Avatar sx={{ 
+                                width: 35, 
+                                height: 35, 
+                                bgcolor: isAuthenticated ? '#ffffff' : '#1976d2', 
+                                color: isAuthenticated ? '#333333' : 'white', 
+                                fontWeight: 'bold',
+                                boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.2)',
+                                border: '2px solid #ffffff'
+                            }}>
+                                {isAuthenticated && user?.name ? user.name.charAt(0).toUpperCase() : <AccountCircle />}
+                            </Avatar>
+                        </IconButton>
+                    </Tooltip>
+                </Box>
+                
+                <Menu
+                    anchorEl={anchorEl}
+                    id="account-menu"
+                    open={open}
+                    onClose={handleClose}
+                    onClick={handleClose}
+                    PaperProps={{
+                        elevation: 0,
+                        sx: {
+                            overflow: 'visible',
+                            filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
+                            mt: 1.5,
+                            '& .MuiAvatar-root': {
+                                width: 32,
+                                height: 32,
+                                ml: -0.5,
+                                mr: 1,
+                            },
+                            '&::before': {
+                                content: '""',
+                                display: 'block',
+                                position: 'absolute',
+                                top: 0,
+                                right: 14,
+                                width: 10,
+                                height: 10,
+                                bgcolor: 'background.paper',
+                                transform: 'translateY(-50%) rotate(45deg)',
+                                zIndex: 0,
+                            },
+                        },
+                    }}
+                    transformOrigin={{ horizontal: 'right', vertical: 'top' }}
+                    anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
+                >
+                    {isAuthenticated ? [
+                        <MenuItem key="profile" component={Link} to="/profile">
+                            Perfil ({user?.name})
+                        </MenuItem>,
+                        <MenuItem key="logout" onClick={logout}>
+                            Cerrar Sesión
+                        </MenuItem>
+                    ] : [
+                        <MenuItem key="login" component={Link} to="/login">
+                            Iniciar Sesión
+                        </MenuItem>,
+                        <MenuItem key="register" component={Link} to="/register">
+                            Registrarse
+                        </MenuItem>
+                    ]}
+                </Menu>
             </div>
                          
                 
