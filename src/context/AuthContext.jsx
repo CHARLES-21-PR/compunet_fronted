@@ -15,7 +15,10 @@ export const AuthProvider = ({ children }) => {
         if (token) {
             // Opcional: Aquí podrías hacer un fetch a /api/user para validar el token
             // Por ahora asumimos que si hay token, hay sesión.
-            setUser({ name: localStorage.getItem('userName') || 'Usuario' });
+            setUser({ 
+                name: localStorage.getItem('userName') || 'Usuario',
+                role: localStorage.getItem('userRole') || 'client'
+            });
         }
     }, [token]);
 
@@ -57,13 +60,14 @@ export const AuthProvider = ({ children }) => {
 
             // Si el backend no devuelve el usuario, usamos un valor por defecto.
             // RECOMENDACIÓN: Actualizar el backend para que devuelva el objeto 'user'.
-            const receivedUser = data.user || { name: 'Usuario' };
+            const receivedUser = data.user || { name: 'Usuario', role: 'client' };
 
             // Guardar token y datos
             localStorage.setItem('token', receivedToken);
             localStorage.setItem('userName', receivedUser.name);
+            localStorage.setItem('userRole', receivedUser.role || 'client');
             setToken(receivedToken);
-            setUser(receivedUser);
+            setUser({ ...receivedUser, role: receivedUser.role || 'client' });
             navigate('/'); // Redirigir al inicio
             return { success: true };
         } catch (error) {
@@ -111,12 +115,13 @@ export const AuthProvider = ({ children }) => {
             }
 
             // En registro, si el backend no devuelve el usuario, podemos usar el nombre que acabamos de enviar.
-            const receivedUser = data.user || { name: name };
+            const receivedUser = data.user || { name: name, role: 'client' };
 
             localStorage.setItem('token', receivedToken);
             localStorage.setItem('userName', receivedUser.name);
+            localStorage.setItem('userRole', receivedUser.role || 'client');
             setToken(receivedToken);
-            setUser(receivedUser);
+            setUser({ ...receivedUser, role: receivedUser.role || 'client' });
             navigate('/');
             return { success: true };
         } catch (error) {
@@ -146,6 +151,7 @@ export const AuthProvider = ({ children }) => {
             // Limpiar localmente pase lo que pase
             localStorage.removeItem('token');
             localStorage.removeItem('userName');
+            localStorage.removeItem('userRole');
             setToken(null);
             setUser(null);
             navigate('/login');

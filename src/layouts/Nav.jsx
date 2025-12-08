@@ -158,6 +158,11 @@ function Nav() {
                     anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
                 >
                     {isAuthenticated ? [
+                        user?.role === 'admin' && (
+                            <MenuItem key="admin" component={Link} to="/admin">
+                                Panel de Admin
+                            </MenuItem>
+                        ),
                         <MenuItem key="profile" component={Link} to="/profile">
                             Perfil ({user?.name})
                         </MenuItem>,

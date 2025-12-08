@@ -15,7 +15,7 @@
     z-index: 100;
 }
 
-header {
+.navegation header {
     background-color: rgb(96, 70, 145);
     position: relative;
     
@@ -58,7 +58,7 @@ header {
     margin-right: 5px;
 }
 
-nav {
+.navegation nav {
     background-color: #8bdf01;
     height: 60px;
     display: flex;
