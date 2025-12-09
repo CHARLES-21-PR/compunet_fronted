@@ -120,10 +120,18 @@ function AdminCategories() {
                 method: method,
                 headers: {
                     'Content-Type': 'application/json',
+                    'Accept': 'application/json',
                     'Authorization': `Bearer ${authToken}`
                 },
                 body: JSON.stringify(currentCategory)
             });
+
+            const contentType = response.headers.get("content-type");
+            if (!contentType || contentType.indexOf("application/json") === -1) {
+                const text = await response.text();
+                console.error("Respuesta no JSON:", text);
+                throw new Error("El servidor devolvió una respuesta inesperada (HTML). Verifica que el backend esté corriendo y la ruta sea correcta.");
+            }
 
             if (!response.ok) {
                 const errorData = await response.json();

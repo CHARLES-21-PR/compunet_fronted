@@ -78,6 +78,7 @@ function AdminProducts() {
     });
     const [isEditing, setIsEditing] = useState(false);
     const [searchTerm, setSearchTerm] = useState('');
+    const [selectedCategory, setSelectedCategory] = useState(''); // New state for category filter
 
     const fetchProducts = async () => {
         setLoading(true);
@@ -231,10 +232,12 @@ function AdminProducts() {
         }
     };
 
-    const filteredProducts = products.filter(prod => 
-        prod.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        (prod.description && prod.description.toLowerCase().includes(searchTerm.toLowerCase()))
-    );
+    const filteredProducts = products.filter(prod => {
+        const matchesSearch = prod.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            (prod.description && prod.description.toLowerCase().includes(searchTerm.toLowerCase()));
+        const matchesCategory = selectedCategory ? prod.category_id === selectedCategory : true;
+        return matchesSearch && matchesCategory;
+    });
 
     const getCategoryName = (id) => {
         const cat = categories.find(c => c.id === id);
@@ -269,6 +272,21 @@ function AdminProducts() {
                         }}
                         sx={{ width: { xs: '100%', sm: '300px' }, '& .MuiOutlinedInput-root': { borderRadius: 2 } }}
                     />
+                    <TextField
+                        select
+                        label="Filtrar por categoría"
+                        value={selectedCategory}
+                        onChange={(e) => setSelectedCategory(e.target.value)}
+                        size="small"
+                        sx={{ width: { xs: '100%', sm: '200px' } }}
+                    >
+                        <MenuItem value="">Todas las categorías</MenuItem>
+                        {categories.map((cat) => (
+                            <MenuItem key={cat.id} value={cat.id}>
+                                {cat.name}
+                            </MenuItem>
+                        ))}
+                    </TextField>
                     <Button 
                         variant="contained" 
                         startIcon={<AddIcon />} 
@@ -298,9 +316,10 @@ function AdminProducts() {
                                 <TableRow>
                                     <StyledTableCell>Producto</StyledTableCell>
                                     <StyledTableCell>Categoría</StyledTableCell>
+                                    <StyledTableCell>Descripción</StyledTableCell>
                                     <StyledTableCell align="right">Precio</StyledTableCell>
                                     <StyledTableCell align="center">Stock</StyledTableCell>
-                                    <StyledTableCell align="right">Acciones</StyledTableCell>
+                                    <StyledTableCell align="center">Acciones</StyledTableCell>
                                 </TableRow>
                             </TableHead>
                             <TableBody>
@@ -317,9 +336,6 @@ function AdminProducts() {
                                                 </Avatar>
                                                 <Box>
                                                     <Typography variant="body2" fontWeight="bold">{product.name}</Typography>
-                                                    <Typography variant="caption" color="text.secondary" sx={{ display: 'block', maxWidth: 200, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
-                                                        {product.description || 'Sin descripción'}
-                                                    </Typography>
                                                 </Box>
                                             </Box>
                                         </StyledTableCell>
@@ -330,6 +346,18 @@ function AdminProducts() {
                                                 sx={{ bgcolor: '#f5f5f5', color: '#666', fontWeight: 500 }} 
                                             />
                                         </StyledTableCell>
+                                        <StyledTableCell sx={{ maxWidth: 200 }}>
+                                            <Tooltip title={product.description || ''}>
+                                                <Typography variant="body2" color="text.secondary" sx={{ 
+                                                    whiteSpace: 'nowrap', 
+                                                    overflow: 'hidden', 
+                                                    textOverflow: 'ellipsis'
+                                                }}>
+                                                    {product.description || 'Sin descripción'}
+                                                </Typography>
+                                            </Tooltip>
+                                        </StyledTableCell>
+                                        
                                         <StyledTableCell align="right">
                                             <Typography fontWeight="bold" color="primary">
                                                 S/. {parseFloat(product.price).toFixed(2)}

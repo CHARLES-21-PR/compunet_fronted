@@ -30,9 +30,12 @@ import {
     Security as SecurityIcon
 } from '@mui/icons-material';
 
+import { useCart } from '../context/CartContext';
+
 function ProductDetailView() {
     const { id } = useParams();
     const navigate = useNavigate();
+    const { addToCart } = useCart();
     const [product, setProduct] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -250,6 +253,9 @@ function ProductDetailView() {
                                             fullWidth
                                             startIcon={<ShoppingCartIcon />}
                                             disabled={isOutOfStock}
+                                            onClick={() => {
+                                                addToCart(product, quantity);
+                                            }}
                                             sx={{ 
                                                 bgcolor: '#1a2035', 
                                                 color: 'white',

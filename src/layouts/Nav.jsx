@@ -1,11 +1,14 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { Menu, MenuItem, IconButton, Typography, Box, Avatar, Tooltip } from '@mui/material';
+import { useCart } from '../context/CartContext';
+import { Menu, MenuItem, IconButton, Typography, Box, Avatar, Tooltip, Badge } from '@mui/material';
 import AccountCircle from '@mui/icons-material/AccountCircle';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 
 function Nav() {
     const { user, logout } = useAuth();
+    const { cartCount } = useCart();
     const isAuthenticated = !!user;
     const [anchorEl, setAnchorEl] = useState(null);
     const open = Boolean(anchorEl);
@@ -98,6 +101,13 @@ function Nav() {
 
             <div className="enlace">
                 <Box sx={{ display: 'flex', alignItems: 'center', textAlign: 'center', height: '100%', pr: 3 }}>
+                    <Tooltip title="Carrito de compras">
+                        <IconButton component={Link} to="/cart" size="large" color="inherit" sx={{ mr: 2 }}>
+                            <Badge badgeContent={cartCount} color="error">
+                                <ShoppingCartIcon sx={{ color: '#333' }} />
+                            </Badge>
+                        </IconButton>
+                    </Tooltip>
                     <Tooltip title="Configuración de cuenta">
                         <IconButton
                             onClick={handleMenu}
