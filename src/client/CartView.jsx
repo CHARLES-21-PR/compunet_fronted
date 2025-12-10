@@ -89,14 +89,14 @@ function CartView() {
     }
 
     return (
-        <Container maxWidth="xl" sx={{ mt: 4, mb: 8 }}>
-            <Typography variant="h4" component="h1" sx={{ fontWeight: 800, mb: 4, color: '#1a2035' }}>
+        <Container maxWidth="lg" sx={{ mt: 4, mb: 8 }}>
+            <Typography variant="h4" component="h1" sx={{ fontWeight: 800, mb: 4, color: '#1a2035', textAlign: 'center' }}>
                 Carrito de Compras
             </Typography>
 
-            <Grid container spacing={4}>
+            <Grid container spacing={4} justifyContent="center">
                 {/* Lista de Productos */}
-                <Grid item xs={12} lg={8}>
+                <Grid item xs={12} md={8}>
                     <Paper elevation={0} sx={{ borderRadius: 3, border: '1px solid #e0e0e0', overflow: 'hidden' }}>
                         {/* Header de la lista */}
                         <Box sx={{ p: 2, bgcolor: '#f8f9fa', borderBottom: '1px solid #e0e0e0', display: 'flex', alignItems: 'center' }}>
@@ -216,7 +216,7 @@ function CartView() {
                 </Grid>
 
                 {/* Resumen de Orden */}
-                <Grid item xs={12} lg={4}>
+                <Grid item xs={12} md={4}>
                     <Card 
                         elevation={0} 
                         sx={{ 
