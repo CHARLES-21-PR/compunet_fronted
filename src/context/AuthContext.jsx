@@ -17,7 +17,8 @@ export const AuthProvider = ({ children }) => {
             // Por ahora asumimos que si hay token, hay sesión.
             setUser({ 
                 name: localStorage.getItem('userName') || 'Usuario',
-                role: localStorage.getItem('userRole') || 'client'
+                role: localStorage.getItem('userRole') || 'client',
+                email: localStorage.getItem('userEmail') || ''
             });
         }
     }, [token]);
@@ -66,8 +67,9 @@ export const AuthProvider = ({ children }) => {
             localStorage.setItem('token', receivedToken);
             localStorage.setItem('userName', receivedUser.name);
             localStorage.setItem('userRole', receivedUser.role || 'client');
+            localStorage.setItem('userEmail', receivedUser.email || email); // Guardar email
             setToken(receivedToken);
-            setUser({ ...receivedUser, role: receivedUser.role || 'client' });
+            setUser({ ...receivedUser, role: receivedUser.role || 'client', email: receivedUser.email || email });
             navigate('/'); // Redirigir al inicio
             return { success: true };
         } catch (error) {

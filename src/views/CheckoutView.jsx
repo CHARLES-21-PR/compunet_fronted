@@ -29,6 +29,7 @@ import { useNavigate } from 'react-router-dom';
 import CreditCardIcon from '@mui/icons-material/CreditCard';
 import PhoneAndroidIcon from '@mui/icons-material/PhoneAndroid';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
+import AccessTimeIcon from '@mui/icons-material/AccessTime';
 
 const steps = ['Identificación y Comprobante', 'Método de Pago', 'Confirmación'];
 
@@ -504,14 +505,29 @@ function CheckoutView() {
                 fullWidth
             >
                 <DialogContent sx={{ textAlign: 'center', py: 4 }}>
-                    <CheckCircleOutlineIcon color="success" sx={{ fontSize: 80, mb: 2 }} />
-                    <DialogTitle id="alert-dialog-title" sx={{ p: 0, mb: 1, fontSize: '1.5rem' }}>
-                        ¡Pago Exitoso!
-                    </DialogTitle>
-                    <DialogContentText id="alert-dialog-description">
-                        Tu pedido ha sido procesado correctamente. <br/>
-                        Te hemos enviado un correo con los detalles de tu compra.
-                    </DialogContentText>
+                    {paymentMethod === 'yape' ? (
+                        <>
+                            <AccessTimeIcon color="warning" sx={{ fontSize: 80, mb: 2 }} />
+                            <DialogTitle id="alert-dialog-title" sx={{ p: 0, mb: 1, fontSize: '1.5rem' }}>
+                                ¡Pedido Registrado!
+                            </DialogTitle>
+                            <DialogContentText id="alert-dialog-description">
+                                Tu pedido ha sido registrado y está <strong>pendiente de validación</strong>. <br/>
+                                Verificaremos tu pago por Yape/Plin y te enviaremos la confirmación a tu correo.
+                            </DialogContentText>
+                        </>
+                    ) : (
+                        <>
+                            <CheckCircleOutlineIcon color="success" sx={{ fontSize: 80, mb: 2 }} />
+                            <DialogTitle id="alert-dialog-title" sx={{ p: 0, mb: 1, fontSize: '1.5rem' }}>
+                                ¡Pago Exitoso!
+                            </DialogTitle>
+                            <DialogContentText id="alert-dialog-description">
+                                Tu pedido ha sido procesado correctamente. <br/>
+                                Te hemos enviado un correo con los detalles de tu compra.
+                            </DialogContentText>
+                        </>
+                    )}
                 </DialogContent>
                 <DialogActions sx={{ justifyContent: 'center', pb: 3 }}>
                     <Button onClick={handleCloseSuccessModal} variant="contained" autoFocus>

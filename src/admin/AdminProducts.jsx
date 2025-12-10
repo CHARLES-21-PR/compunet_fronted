@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import {
     Box,
     Paper,
@@ -22,7 +23,9 @@ import {
     Chip,
     Tooltip,
     MenuItem,
-    Avatar
+    Avatar,
+    FormControlLabel,
+    Switch
 } from '@mui/material';
 import {
     Add as AddIcon,
@@ -61,6 +64,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 function AdminProducts() {
+    const location = useLocation();
     const [products, setProducts] = useState([]);
     const [categories, setCategories] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -79,6 +83,14 @@ function AdminProducts() {
     const [isEditing, setIsEditing] = useState(false);
     const [searchTerm, setSearchTerm] = useState('');
     const [selectedCategory, setSelectedCategory] = useState(''); // New state for category filter
+    const [filterLowStock, setFilterLowStock] = useState(false);
+
+    useEffect(() => {
+        const params = new URLSearchParams(location.search);
+        if (params.get('filter') === 'low_stock') {
+            setFilterLowStock(true);
+        }
+    }, [location]);
 
     const fetchProducts = async () => {
         setLoading(true);
@@ -236,7 +248,8 @@ function AdminProducts() {
         const matchesSearch = prod.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
             (prod.description && prod.description.toLowerCase().includes(searchTerm.toLowerCase()));
         const matchesCategory = selectedCategory ? prod.category_id === selectedCategory : true;
-        return matchesSearch && matchesCategory;
+        const matchesLowStock = filterLowStock ? Number(prod.stock) <= 10 : true;
+        return matchesSearch && matchesCategory && matchesLowStock;
     });
 
     const getCategoryName = (id) => {
@@ -287,6 +300,16 @@ function AdminProducts() {
                             </MenuItem>
                         ))}
                     </TextField>
+                    <FormControlLabel
+                        control={
+                            <Switch
+                                checked={filterLowStock}
+                                onChange={(e) => setFilterLowStock(e.target.checked)}
+                                color="warning"
+                            />
+                        }
+                        label="Stock Bajo (≤10)"
+                    />
                     <Button 
                         variant="contained" 
                         startIcon={<AddIcon />} 

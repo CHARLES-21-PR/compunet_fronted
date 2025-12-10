@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import {
     Box,
     Paper,
@@ -19,13 +20,18 @@ import {
     Chip,
     MenuItem,
     Grid,
-    Divider
+    Divider,
+    Select,
+    FormControl,
+    InputLabel
 } from '@mui/material';
 import {
     Visibility as VisibilityIcon,
     Delete as DeleteIcon,
     Search as SearchIcon,
-    ShoppingCart as ShoppingCartIcon
+    ShoppingCart as ShoppingCartIcon,
+    CheckCircle as CheckCircleIcon,
+    FilterListOff as FilterListOffIcon
 } from '@mui/icons-material';
 import { styled } from '@mui/material/styles';
 import AdminLayout from './AdminLayout';
@@ -57,17 +63,31 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 
 const statusColors = {
     'Completado': 'success',
+    'Pagado': 'success',
     'Pendiente': 'warning',
     'Procesando': 'info',
     'Cancelado': 'error'
 };
 
 function AdminOrders() {
+    const location = useLocation();
+    const navigate = useNavigate();
     const [orders, setOrders] = useState([]);
     const [loading, setLoading] = useState(true);
     const [searchTerm, setSearchTerm] = useState('');
+    const [statusFilter, setStatusFilter] = useState('all');
+    const [paymentMethodFilter, setPaymentMethodFilter] = useState('all');
     const [openDialog, setOpenDialog] = useState(false);
     const [currentOrder, setCurrentOrder] = useState(null);
+
+    useEffect(() => {
+        const params = new URLSearchParams(location.search);
+        const status = params.get('status');
+        const payment = params.get('payment');
+
+        if (status) setStatusFilter(status);
+        if (payment) setPaymentMethodFilter(payment);
+    }, [location]);
 
     const fetchOrders = async () => {
         setLoading(true);
@@ -98,12 +118,31 @@ function AdminOrders() {
         setSearchTerm(event.target.value);
     };
 
+    const uniquePaymentMethods = [...new Set(orders.map(o => o.payment_method || o.paymentMethod).filter(Boolean))];
+
     const filteredOrders = orders.filter((order) => {
         const customerName = order.customer_name || order.customer || '';
         const orderId = order.id ? order.id.toString() : '';
-        return customerName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        const matchesSearch = customerName.toLowerCase().includes(searchTerm.toLowerCase()) ||
                orderId.toLowerCase().includes(searchTerm.toLowerCase());
+        
+        const currentStatus = (order.status || '').toLowerCase();
+        const filterStatus = statusFilter.toLowerCase();
+        const matchesStatus = statusFilter === 'all' || currentStatus === filterStatus;
+
+        const paymentMethod = (order.payment_method || order.paymentMethod || '').toLowerCase();
+        const filterPayment = paymentMethodFilter.toLowerCase();
+        const matchesPayment = paymentMethodFilter === 'all' || paymentMethod === filterPayment;
+
+        return matchesSearch && matchesStatus && matchesPayment;
     });
+
+    const handleClearFilters = () => {
+        setSearchTerm('');
+        setStatusFilter('all');
+        setPaymentMethodFilter('all');
+        navigate('/admin/orders');
+    };
 
     const handleViewDetails = async (order) => {
         if (order.items && order.items.length > 0) {
@@ -147,13 +186,42 @@ function AdminOrders() {
                 body: JSON.stringify({ status: currentOrder.status })
             });
 
-            if (!response.ok) throw new Error('Error al actualizar estado');
+            if (!response.ok) {
+                const errorData = await response.json().catch(() => ({}));
+                throw new Error(errorData.message || 'Error al actualizar estado');
+            }
             
             setOrders(orders.map(o => o.id === currentOrder.id ? { ...o, status: currentOrder.status } : o));
             handleCloseDialog();
         } catch (error) {
             console.error(error);
-            alert("Error al actualizar el pedido");
+            alert(error.message || "Error al actualizar el pedido");
+        }
+    };
+
+    const handleValidateOrder = async (order) => {
+        if (window.confirm(`¿Validar pago Yape para el pedido #${order.id}?`)) {
+            try {
+                const token = localStorage.getItem('token');
+                const response = await fetch(`/api/orders/${order.id}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify({ status: 'Pagado' })
+                });
+
+                if (!response.ok) {
+                    const errorData = await response.json().catch(() => ({}));
+                    throw new Error(errorData.message || 'Error al actualizar estado');
+                }
+                
+                setOrders(orders.map(o => o.id === order.id ? { ...o, status: 'Pagado' } : o));
+            } catch (error) {
+                console.error(error);
+                alert(error.message || "Error al validar el pedido");
+            }
         }
     };
 
@@ -186,16 +254,61 @@ function AdminOrders() {
                 </Box>
 
                 <Paper sx={{ mb: 3, p: 2 }}>
-                    <TextField
-                        fullWidth
-                        variant="outlined"
-                        placeholder="Buscar por cliente o ID de pedido..."
-                        value={searchTerm}
-                        onChange={handleSearch}
-                        InputProps={{
-                            startAdornment: <SearchIcon sx={{ color: 'action.active', mr: 1 }} />,
-                        }}
-                    />
+                    <Grid container spacing={2} alignItems="center" justifyContent="space-between">
+                        <Grid item xs={12} md={4}>
+                            <TextField
+                                fullWidth
+                                variant="outlined"
+                                placeholder="Buscar por cliente o ID..."
+                                value={searchTerm}
+                                onChange={handleSearch}
+                                InputProps={{
+                                    startAdornment: <SearchIcon sx={{ color: 'action.active', mr: 1 }} />,
+                                }}
+                            />
+                        </Grid>
+                        <Grid item xs={12} md={8}>
+                            <Box sx={{ display: 'flex', gap: 2, justifyContent: { xs: 'flex-start', md: 'flex-end' }, flexWrap: 'wrap' }}>
+                                <FormControl sx={{ minWidth: 150 }} variant="outlined" size="small">
+                                    <InputLabel>Estado</InputLabel>
+                                    <Select
+                                        value={statusFilter}
+                                        onChange={(e) => setStatusFilter(e.target.value)}
+                                        label="Estado"
+                                    >
+                                        <MenuItem value="all">Todos</MenuItem>
+                                        {Object.keys(statusColors).map((status) => (
+                                            <MenuItem key={status} value={status}>{status}</MenuItem>
+                                        ))}
+                                    </Select>
+                                </FormControl>
+                                <FormControl sx={{ minWidth: 150 }} variant="outlined" size="small">
+                                    <InputLabel>Método de Pago</InputLabel>
+                                    <Select
+                                        value={paymentMethodFilter}
+                                        onChange={(e) => setPaymentMethodFilter(e.target.value)}
+                                        label="Método de Pago"
+                                    >
+                                        <MenuItem value="all">Todos</MenuItem>
+                                        {uniquePaymentMethods.map((method) => (
+                                            <MenuItem key={method} value={method}>{method}</MenuItem>
+                                        ))}
+                                    </Select>
+                                </FormControl>
+                                {(statusFilter !== 'all' || paymentMethodFilter !== 'all' || searchTerm !== '') && (
+                                    <Button 
+                                        variant="outlined" 
+                                        color="secondary" 
+                                        onClick={handleClearFilters}
+                                        startIcon={<FilterListOffIcon />}
+                                        size="small"
+                                    >
+                                        Limpiar
+                                    </Button>
+                                )}
+                            </Box>
+                        </Grid>
+                    </Grid>
                 </Paper>
 
                 <TableContainer component={Paper} sx={{ boxShadow: '0px 4px 20px rgba(0, 0, 0, 0.05)' }}>
@@ -205,6 +318,7 @@ function AdminOrders() {
                                 <StyledTableCell>ID Pedido</StyledTableCell>
                                 <StyledTableCell>Cliente</StyledTableCell>
                                 <StyledTableCell>Fecha</StyledTableCell>
+                                <StyledTableCell>Método Pago</StyledTableCell>
                                 <StyledTableCell>Total</StyledTableCell>
                                 <StyledTableCell>Estado</StyledTableCell>
                                 <StyledTableCell align="center">Acciones</StyledTableCell>
@@ -220,6 +334,7 @@ function AdminOrders() {
                                     <StyledTableCell>
                                         {order.created_at ? new Date(order.created_at).toLocaleDateString() : order.date}
                                     </StyledTableCell>
+                                    <StyledTableCell>{order.payment_method || order.paymentMethod || 'N/A'}</StyledTableCell>
                                     <StyledTableCell>S/ {Number(order.total).toFixed(2)}</StyledTableCell>
                                     <StyledTableCell>
                                         <Chip 
@@ -230,6 +345,11 @@ function AdminOrders() {
                                         />
                                     </StyledTableCell>
                                     <StyledTableCell align="center">
+                                        {(order.payment_method === 'Yape' || order.paymentMethod === 'Yape') && order.status === 'Pendiente' && (
+                                            <IconButton color="success" onClick={() => handleValidateOrder(order)} title="Validar Pago Yape">
+                                                <CheckCircleIcon />
+                                            </IconButton>
+                                        )}
                                         <IconButton color="primary" onClick={() => handleViewDetails(order)}>
                                             <VisibilityIcon />
                                         </IconButton>
@@ -241,7 +361,7 @@ function AdminOrders() {
                             ))}
                             {filteredOrders.length === 0 && (
                                 <TableRow>
-                                    <TableCell colSpan={6} align="center" sx={{ py: 3 }}>
+                                    <TableCell colSpan={7} align="center" sx={{ py: 3 }}>
                                         <Typography variant="body1" color="text.secondary">
                                             No se encontraron pedidos
                                         </Typography>
