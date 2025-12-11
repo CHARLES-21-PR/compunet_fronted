@@ -1,11 +1,11 @@
 import React from 'react';
-import './StoresView.css';
+import './SupportView.css';
 
-function StoresView() {
+function SupportView() {
     return (
         <div id="index">
             <main>
-                {/* Floating Card */}
+                {/* Floating Contact Card */}
                 <div className="card card-fijo collapse" id="collapseExample">
                     <div className="card-body card-body-flotante">
                         <div className="title-card-flotante">
@@ -23,7 +23,7 @@ function StoresView() {
                             <div className="row">
                                 <div className="col coltexflo colphone">Aqui!! Sucursal Imperial 👋</div>
                                 <div className="col-md-auto colphone">
-                                    <a target="_blank" href="https://api.whatsapp.com/send?phone=51926052866&text=Hola,%20Quisiera%20consultar%20sobre%20el%20producto%20en%20venta">
+                                    <a target="_blank" rel="noopener noreferrer" href="https://api.whatsapp.com/send?phone=51926052866&text=Hola,%20Quisiera%20consultar%20sobre%20el%20producto%20en%20venta">
                                         <img className="enviarflotante" src="/img/enviar.png" alt="Enviar" />
                                     </a>
                                 </div>
@@ -33,7 +33,7 @@ function StoresView() {
                             <div className="row">
                                 <div className="col coltexflo colphone">Aqui!! Sucursal San Vicente 👋</div>
                                 <div className="col-md-auto colphone">
-                                    <a target="_blank" href="https://api.whatsapp.com/send?phone=51928462723&text=Hola,%20Quisiera%20consultar%20sobre%20el%20producto%20en%20venta">
+                                    <a target="_blank" rel="noopener noreferrer" href="https://api.whatsapp.com/send?phone=51928462723&text=Hola,%20Quisiera%20consultar%20sobre%20el%20producto%20en%20venta">
                                         <img className="enviarflotante" src="/img/enviar.png" alt="Enviar" />
                                     </a>
                                 </div>
@@ -43,7 +43,7 @@ function StoresView() {
                             <div className="row">
                                 <div className="col coltexflo colphone">Aqui!! Sucursal Mala 👋</div>
                                 <div className="col-md-auto colphone">
-                                    <a target="_blank" href="https://api.whatsapp.com/send?phone=51900186869&text=Hola,%20Quisiera%20consultar%20sobre%20el%20producto%20en%20venta">
+                                    <a target="_blank" rel="noopener noreferrer" href="https://api.whatsapp.com/send?phone=51900186869&text=Hola,%20Quisiera%20consultar%20sobre%20el%20producto%20en%20venta">
                                         <img className="enviarflotante" src="/img/enviar.png" alt="Enviar" />
                                     </a>
                                 </div>
@@ -112,63 +112,68 @@ function StoresView() {
                     </div>
                 </div>
 
-                {/* Whatsapp Icon */}
+                {/* WhatsApp Button */}
                 <div className="ico-whatsapp" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
                     <img className="ico-img-wsp" src="/img/whatsapp.svg" width="50px" height="50px" alt="WhatsApp" />
                 </div>
 
-                {/* Main Section */}
                 <section>
                     <div>
-                        <div className="todopoder">
-                            <div className="container contibannertienda">
+                        <div className="powercolor">
+                            <div className="container contibannertec">
                                 <div className="row">
                                     <div className="col-sm contetexttecnico">
-                                        <span className="titletecnicotra colorimpe">Tienda Principal en Imperial</span>
-                                        <p className="ptecnico colorprincipal">Jr. 2 de Mayo N° 475 - Imperial (a 1/2 cuadra Plaza Armas)</p>
-                                        <iframe className="mapmala" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d971.6478935331397!2d-76.35280923057536!3d-13.061649367706199!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x910ffbdd548ed87f%3A0xd05f95ed8675ce8!2s2%20de%20Mayo%20475%2C%20Imperial%2015701!5e0!3m2!1ses!2spe!4v1643601881339!5m2!1ses!2spe"></iframe>
+                                        <h2 className="text-tecnico">Necesitas ayuda <br /> con tu PC?</h2>
+                                        <div className="alert alert-warning dangertecnico" role="alert">Llamanos ya!</div>
+                                        <br />
+                                        <a className="btn btn-danger imtecnico" target="_blank" rel="noopener noreferrer" href="https://api.whatsapp.com/send?phone=51900937418&text=Hola,%20Quisiera%20consultar%20sobre%20un%20servicio%20técnico">Imperial: 900937418</a>
+                                        <a className="btn btn-danger svtecnico" target="_blank" rel="noopener noreferrer" href="https://api.whatsapp.com/send?phone=51921304402&text=Hola,%20Quisiera%20consultar%20sobre%20un%20servicio%20técnico">San Vicente: 921304402</a>
+                                        <a className="btn btn-danger malatecnico" target="_blank" rel="noopener noreferrer" href="https://api.whatsapp.com/send?phone=51928914095&text=Hola,%20Quisiera%20consultar%20sobre%20un%20servicio%20técnico">Mala: 928914095</a>
                                     </div>
-                                    <div className="col-sm coltiendas colti">
-                                        <img src="/img/imperial.webp" className="imgtienda" alt="" />
+                                    <div className="col-sm col-img-tecnico">
+                                        <img src="/img/soporte.png" className="imgslider" alt="Soporte" />
+                                    </div>
+                                    <div className="burbujas">
+                                        <div className="efectobur"></div>
+                                        <div className="efectobur"></div>
+                                        <div className="efectobur"></div>
+                                        <div className="efectobur"></div>
+                                        <div className="efectobur"></div>
+                                        <div className="efectobur"></div>
+                                        <div className="efectobur"></div>
+                                        <div className="efectobur"></div>
+                                        <div className="efectobur"></div>
+                                        <div className="efectobur"></div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-
                         <div className="container contegenetrabajo">
-                            <div className="col-sm col-pc-tecnico">
-                                <div className="row colti">
-                                    <h3 className="textdelogoempre ">Trabajamos con:</h3>
-                                    <div className="dropdown-divider divilog"></div>
-                                    <div className="col-sm collogoempresas"><img src="/img/loglenovo.webp" className="imglogosempresas" alt="" /></div>
-                                    <div className="col-sm collogoempresas"><img src="/img/loghp.webp" className="imglogosempresas" alt="" /></div>
-                                    <div className="col-sm collogoempresas"><img src="/img/logepson.webp" className="imglogosempresas" alt="" /></div>
-                                    <div className="col-sm collogoempresas"><img src="/img/logcanon.webp" className="imglogosempresas" alt="" /></div>
-                                    <div className="col-sm collogoempresas"><img src="/img/logintel.webp" className="imglogosempresas" alt="" /></div>
-                                    <div className="col-sm collogoempresas"><img src="/img/logamd.webp" className="imglogosempresas" alt="" /></div>
-                                </div>
-                                <div className="dropdown-divider divilog"></div>
-                            </div>
-
                             <div className="row rowtectrabajo">
-                                <div className="col-sm col-pc-tecnico colti">
-                                    <img src="/img/tiendasanvicente.webp" className="imgtiendascomer" alt="" />
+                                <div className="col-sm col-pc-tecnico">
+                                    <img src="/img/tec1.webp" className="imgtecnicotrabajo" alt="Computadoras" />
                                 </div>
-                                <div className="col-sm coltexttitle colti">
-                                    <span className="titletecnicotra">Tienda en San Vicente</span>
-                                    <p className="ptecnico">Jr. O’Higgins N° 207 - San Vicente</p>
-                                    <iframe className="mapmala" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d971.5890283571376!2d-76.38755812729273!3d-13.076602652222787!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x910ff937de728b93%3A0x8a0b4514f5fec608!2sJiron%20O%20Higgins%20207%2C%20San%20Vicente%20de%20Ca%C3%B1ete%2015701!5e0!3m2!1ses!2spe!4v1643601578282!5m2!1ses!2spe"></iframe>
+                                <div className="col-sm coltexttitle">
+                                    <span className="titletecnicotra">Soporte técnico de Computadoras</span>
+                                    <p className="ptecnico">Mantenimiento Preventivo - Mantenimiento Correptivo - Repuesto de pc - Formateo - Antivirus <br />También podemos repontenciar tu pc</p>
                                 </div>
                             </div>
-
                             <div className="row rowtectrabajo">
-                                <div className="col-sm coltexttitle colti">
-                                    <span className="titletecnicotra colorteclap">Tienda en Mala</span>
-                                    <p className="ptecnico ">Jr. Real N ° 413 - Mala</p>
-                                    <iframe className="mapmala" src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d818.3748061408786!2d-76.63444568087344!3d-12.656621282455621!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x910565513e0359d3%3A0xee84a9ae26e2dc7c!2sJiron%20Real%20413%2C%20Mala%2015608!5e0!3m2!1ses!2spe!4v1643601640370!5m2!1ses!2spe"></iframe>
+                                <div className="col-sm coltexttitle">
+                                    <span className="titletecnicotra colorteclap">Soporte técnico de Laptops</span>
+                                    <p className="ptecnico">Mantenimiento Preventivo - Mantenimiento Correptivo - Repuesto para laptops - Formateo - Antivirus - Reparación de placas - Cambio de Pantalla - Reparación de Bizagra - Cambio de teclado<br />También podemos repontenciar tu laptop.</p>
                                 </div>
-                                <div className="col-sm col-pc-tecnico colti">
-                                    <img src="/img/mala.webp" className="imgtiendascomer" alt="" />
+                                <div className="col-sm col-pc-tecnico">
+                                    <img src="/img/tec2.webp" className="imgtecnicotrabajo" alt="Laptops" />
+                                </div>
+                            </div>
+                            <div className="row rowtectrabajo">
+                                <div className="col-sm col-pc-tecnico">
+                                    <img src="/img/tec3.webp" className="imgtecnicotrabajo" alt="Impresoras" />
+                                </div>
+                                <div className="col-sm coltexttitle">
+                                    <span className="titletecnicotra colortecimp">Soporte técnico de Impresoras</span>
+                                    <p className="ptecnico">Mantenimiento Preventivo - Mantenimiento Correptivo - Repuesto de Impresoras - Instalación de Sistema Continuo - Reset de Contador de Impresoras - Reparación de Impresoras Matriciales - Láser - A3 - A4 - Ticketera<br />Podemos ayudarte con las diferentes marcas de Impresoras.</p>
                                 </div>
                             </div>
                         </div>
@@ -179,4 +184,4 @@ function StoresView() {
     );
 }
 
-export default StoresView;
+export default SupportView;

@@ -1,11 +1,11 @@
 import React from 'react';
-import './StoresView.css';
+import './CameraView.css';
 
-function StoresView() {
+function CameraView() {
     return (
         <div id="index">
             <main>
-                {/* Floating Card */}
+                {/* Floating Contact Card */}
                 <div className="card card-fijo collapse" id="collapseExample">
                     <div className="card-body card-body-flotante">
                         <div className="title-card-flotante">
@@ -23,7 +23,7 @@ function StoresView() {
                             <div className="row">
                                 <div className="col coltexflo colphone">Aqui!! Sucursal Imperial 👋</div>
                                 <div className="col-md-auto colphone">
-                                    <a target="_blank" href="https://api.whatsapp.com/send?phone=51926052866&text=Hola,%20Quisiera%20consultar%20sobre%20el%20producto%20en%20venta">
+                                    <a target="_blank" rel="noopener noreferrer" href="https://api.whatsapp.com/send?phone=51926052866&text=Hola,%20Quisiera%20consultar%20sobre%20el%20producto%20en%20venta">
                                         <img className="enviarflotante" src="/img/enviar.png" alt="Enviar" />
                                     </a>
                                 </div>
@@ -33,7 +33,7 @@ function StoresView() {
                             <div className="row">
                                 <div className="col coltexflo colphone">Aqui!! Sucursal San Vicente 👋</div>
                                 <div className="col-md-auto colphone">
-                                    <a target="_blank" href="https://api.whatsapp.com/send?phone=51928462723&text=Hola,%20Quisiera%20consultar%20sobre%20el%20producto%20en%20venta">
+                                    <a target="_blank" rel="noopener noreferrer" href="https://api.whatsapp.com/send?phone=51928462723&text=Hola,%20Quisiera%20consultar%20sobre%20el%20producto%20en%20venta">
                                         <img className="enviarflotante" src="/img/enviar.png" alt="Enviar" />
                                     </a>
                                 </div>
@@ -43,7 +43,7 @@ function StoresView() {
                             <div className="row">
                                 <div className="col coltexflo colphone">Aqui!! Sucursal Mala 👋</div>
                                 <div className="col-md-auto colphone">
-                                    <a target="_blank" href="https://api.whatsapp.com/send?phone=51900186869&text=Hola,%20Quisiera%20consultar%20sobre%20el%20producto%20en%20venta">
+                                    <a target="_blank" rel="noopener noreferrer" href="https://api.whatsapp.com/send?phone=51900186869&text=Hola,%20Quisiera%20consultar%20sobre%20el%20producto%20en%20venta">
                                         <img className="enviarflotante" src="/img/enviar.png" alt="Enviar" />
                                     </a>
                                 </div>
@@ -112,7 +112,7 @@ function StoresView() {
                     </div>
                 </div>
 
-                {/* Whatsapp Icon */}
+                {/* WhatsApp Icon */}
                 <div className="ico-whatsapp" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
                     <img className="ico-img-wsp" src="/img/whatsapp.svg" width="50px" height="50px" alt="WhatsApp" />
                 </div>
@@ -120,57 +120,42 @@ function StoresView() {
                 {/* Main Section */}
                 <section>
                     <div>
-                        <div className="todopoder">
-                            <div className="container contibannertienda">
+                        <div className="powercolor">
+                            <div className="container contibannertec">
                                 <div className="row">
                                     <div className="col-sm contetexttecnico">
-                                        <span className="titletecnicotra colorimpe">Tienda Principal en Imperial</span>
-                                        <p className="ptecnico colorprincipal">Jr. 2 de Mayo N° 475 - Imperial (a 1/2 cuadra Plaza Armas)</p>
-                                        <iframe className="mapmala" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d971.6478935331397!2d-76.35280923057536!3d-13.061649367706199!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x910ffbdd548ed87f%3A0xd05f95ed8675ce8!2s2%20de%20Mayo%20475%2C%20Imperial%2015701!5e0!3m2!1ses!2spe!4v1643601881339!5m2!1ses!2spe"></iframe>
+                                        <h2 className="text-tecnico">Instalación de Cámaras<br /> de seguridad</h2>
+                                        <div className="alert alert-warning dangertecnico" role="alert">Llamanos!</div><br />
+                                        <a className="btn btn-danger imtecnico" target="_blank" rel="noopener noreferrer" href="https://api.whatsapp.com/send?phone=51935798472&text=Hola,%20Quisiera%20consultar%20sobre%20instalacion%20de%20camaras">Encargado de camaras: 935798472</a>
                                     </div>
-                                    <div className="col-sm coltiendas colti">
-                                        <img src="/img/imperial.webp" className="imgtienda" alt="" />
+                                    <div className="col-sm col-img-tecnico">
+                                        <img src="/img/inicial.webp" className="imgslider" alt="" />
+                                    </div>
+                                    <div className="burbujas">
+                                        <div className="efectobur"></div>
+                                        <div className="efectobur"></div>
+                                        <div className="efectobur"></div>
+                                        <div className="efectobur"></div>
+                                        <div className="efectobur"></div>
+                                        <div className="efectobur"></div>
+                                        <div className="efectobur"></div>
+                                        <div className="efectobur"></div>
+                                        <div className="efectobur"></div>
+                                        <div className="efectobur"></div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-
-                        <div className="container contegenetrabajo">
-                            <div className="col-sm col-pc-tecnico">
-                                <div className="row colti">
-                                    <h3 className="textdelogoempre ">Trabajamos con:</h3>
-                                    <div className="dropdown-divider divilog"></div>
-                                    <div className="col-sm collogoempresas"><img src="/img/loglenovo.webp" className="imglogosempresas" alt="" /></div>
-                                    <div className="col-sm collogoempresas"><img src="/img/loghp.webp" className="imglogosempresas" alt="" /></div>
-                                    <div className="col-sm collogoempresas"><img src="/img/logepson.webp" className="imglogosempresas" alt="" /></div>
-                                    <div className="col-sm collogoempresas"><img src="/img/logcanon.webp" className="imglogosempresas" alt="" /></div>
-                                    <div className="col-sm collogoempresas"><img src="/img/logintel.webp" className="imglogosempresas" alt="" /></div>
-                                    <div className="col-sm collogoempresas"><img src="/img/logamd.webp" className="imglogosempresas" alt="" /></div>
-                                </div>
-                                <div className="dropdown-divider divilog"></div>
-                            </div>
-
-                            <div className="row rowtectrabajo">
-                                <div className="col-sm col-pc-tecnico colti">
-                                    <img src="/img/tiendasanvicente.webp" className="imgtiendascomer" alt="" />
-                                </div>
-                                <div className="col-sm coltexttitle colti">
-                                    <span className="titletecnicotra">Tienda en San Vicente</span>
-                                    <p className="ptecnico">Jr. O’Higgins N° 207 - San Vicente</p>
-                                    <iframe className="mapmala" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d971.5890283571376!2d-76.38755812729273!3d-13.076602652222787!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x910ff937de728b93%3A0x8a0b4514f5fec608!2sJiron%20O%20Higgins%20207%2C%20San%20Vicente%20de%20Ca%C3%B1ete%2015701!5e0!3m2!1ses!2spe!4v1643601578282!5m2!1ses!2spe"></iframe>
-                                </div>
-                            </div>
-
-                            <div className="row rowtectrabajo">
-                                <div className="col-sm coltexttitle colti">
-                                    <span className="titletecnicotra colorteclap">Tienda en Mala</span>
-                                    <p className="ptecnico ">Jr. Real N ° 413 - Mala</p>
-                                    <iframe className="mapmala" src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d818.3748061408786!2d-76.63444568087344!3d-12.656621282455621!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x910565513e0359d3%3A0xee84a9ae26e2dc7c!2sJiron%20Real%20413%2C%20Mala%2015608!5e0!3m2!1ses!2spe!4v1643601640370!5m2!1ses!2spe"></iframe>
-                                </div>
-                                <div className="col-sm col-pc-tecnico colti">
-                                    <img src="/img/mala.webp" className="imgtiendascomer" alt="" />
-                                </div>
-                            </div>
+                        <div className="app-galeria">
+                            <h2 className="span-precio-text text-title">INSTALACIONES A NUESTROS CLIENTES</h2>
+                            <div className="row row-conte-pro"></div>
+                            {/* Gallery Images */}
+                            {[30, 31, 32, 33, 34, 35, 36, 37, 38].map((num) => (
+                                <span key={num} className=" lazy-load-image-background blur lazy-load-image-loaded" style={{ display: 'inline-block', height: '400px', width: '400px' }}>
+                                    <img src={`/img/camaras/${num}.webp`} height="400px" width="400px" className="img-peque" alt={`Cámara ${num}`} />
+                                </span>
+                            ))}
+                            <p id="load"></p>
                         </div>
                     </div>
                 </section>
@@ -179,4 +164,4 @@ function StoresView() {
     );
 }
 
-export default StoresView;
+export default CameraView;

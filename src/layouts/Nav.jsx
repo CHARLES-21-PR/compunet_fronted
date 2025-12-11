@@ -269,13 +269,13 @@ function Nav() {
                 </ListItem>
                 <Collapse in={mobileSubmenus['atencion']} timeout="auto" unmountOnExit>
                     <List component="div" disablePadding>
-                        <ListItem button sx={{ pl: 4 }} component={Link} to="/category/Camara de vigilancia" onClick={handleDrawerToggle}>
+                        <ListItem button sx={{ pl: 4 }} component={Link} to="/cameras" onClick={handleDrawerToggle}>
                             <ListItemText primary="Camara de vigilancia" />
                         </ListItem>
-                        <ListItem button sx={{ pl: 4 }} component={Link} to="/category/Soporte técnico" onClick={handleDrawerToggle}>
+                        <ListItem button sx={{ pl: 4 }} component={Link} to="/soporte" onClick={handleDrawerToggle}>
                             <ListItemText primary="Soporte técnico" />
                         </ListItem>
-                        <ListItem button sx={{ pl: 4 }} component={Link} to="/category/Nuestros clientes" onClick={handleDrawerToggle}>
+                        <ListItem button sx={{ pl: 4 }} component={Link} to="/clients" onClick={handleDrawerToggle}>
                             <ListItemText primary="Nuestros clientes" />
                         </ListItem>
                     </List>
@@ -383,13 +383,13 @@ function Nav() {
                             <a className="menu_link" href=""><img className="icon1" src="img/l5.webp" alt="" />Atención especializada<img className="arrow" src="assets/arrow.svg" alt="" /></a>
                             <ul className="menu_nesting">
                                 <li className="menu_inside">
-                                    <Link to="/category/Camara de vigilancia" className="menu_link menu_link--inside"><img className="icon2" src="img/a7.webp" alt="" />Camara de vigilancia</Link>
+                                    <Link to="/cameras" className="menu_link menu_link--inside"><img className="icon2" src="img/a7.webp" alt="" />Camara de vigilancia</Link>
                                 </li>
                                 <li className="menu_inside">
-                                    <Link to="/category/Soporte técnico" className="menu_link menu_link--inside"><img className="icon2" src="img/a8.webp" alt="" />Soporte técnico</Link>
+                                    <Link to="/soporte" className="menu_link menu_link--inside"><img className="icon2" src="img/a8.webp" alt="" />Soporte técnico</Link>
                                 </li>
                                 <li className="menu_inside">
-                                    <Link to="/category/Nuestros clientes" className="menu_link menu_link--inside"><img className="icon2" src="img/a9.webp" alt="" />Nuestros clientes</Link>
+                                    <Link to="/clients" className="menu_link menu_link--inside"><img className="icon2" src="img/a9.webp" alt="" />Nuestros clientes</Link>
                                 </li>
                             </ul>
                         </div>

@@ -14,6 +14,9 @@ import LoginView from './views/LoginView.jsx'
 import RegisterView from './views/RegisterView.jsx'
 import StoresView from './views/StoresView.jsx'
 import InternetView from './views/InternetView.jsx'
+import CameraView from './views/CameraView.jsx'
+import SupportView from './views/SupportView.jsx'
+import ClientsView from './views/ClientsView.jsx'
 import AdminDashboard from './admin/AdminDashboard.jsx'
 import AdminCategories from './admin/AdminCategories.jsx'
 import AdminProducts from './admin/AdminProducts.jsx'
@@ -41,6 +44,9 @@ function App() {
           <Route path="/checkout" element={<CheckoutView />} />
           <Route path="/stores" element={<StoresView />} />
           <Route path="/internet" element={<InternetView />} />
+          <Route path="/cameras" element={<CameraView />} />
+          <Route path="/soporte" element={<SupportView />} />
+          <Route path="/clients" element={<ClientsView />} />
           <Route path="/login" element={<LoginView />} />
           <Route path="/register" element={<RegisterView />} />
           <Route path="/admin" element={<AdminDashboard />} />
