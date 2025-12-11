@@ -278,19 +278,23 @@ function CheckoutView() {
                                             sx={{ 
                                                 p: 2, 
                                                 height: '100%',
-                                                cursor: 'pointer',
+                                                cursor: total > 500 ? 'not-allowed' : 'pointer',
                                                 border: paymentMethod === 'yape' ? '2px solid #1976d2' : '1px solid #e0e0e0',
-                                                bgcolor: paymentMethod === 'yape' ? 'rgba(25, 118, 210, 0.04)' : 'white',
+                                                bgcolor: paymentMethod === 'yape' ? 'rgba(25, 118, 210, 0.04)' : (total > 500 ? '#f5f5f5' : 'white'),
+                                                opacity: total > 500 ? 0.7 : 1,
                                                 transition: 'all 0.2s',
                                                 display: 'flex',
                                                 alignItems: 'center',
-                                                justifyContent: 'center'
+                                                justifyContent: 'center',
+                                                flexDirection: 'column'
                                             }}
-                                            onClick={() => setPaymentMethod('yape')}
+                                            onClick={() => {
+                                                if (total <= 500) setPaymentMethod('yape');
+                                            }}
                                         >
                                             <FormControlLabel
                                                 value="yape"
-                                                control={<Radio />}
+                                                control={<Radio disabled={total > 500} />}
                                                 label={
                                                     <Box sx={{ display: 'flex', alignItems: 'center' }}>
                                                         <PhoneAndroidIcon sx={{ mr: 1 }} /> Yape / Plin
@@ -298,6 +302,11 @@ function CheckoutView() {
                                                 }
                                                 sx={{ m: 0 }}
                                             />
+                                            {total > 500 && (
+                                                <Typography variant="caption" color="error" sx={{ mt: 1, textAlign: 'center', display: 'block' }}>
+                                                    Máximo S/ 500.00
+                                                </Typography>
+                                            )}
                                         </Paper>
                                     </Grid>
                                 </Grid>

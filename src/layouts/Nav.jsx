@@ -42,7 +42,7 @@ function Nav() {
     
     // Responsive state
     const theme = useTheme();
-    const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+    const isMobile = useMediaQuery(theme.breakpoints.down('lg'));
     const [mobileOpen, setMobileOpen] = useState(false);
     const [mobileSubmenus, setMobileSubmenus] = useState({});
 
@@ -147,7 +147,7 @@ function Nav() {
 
     // Helper function to render action icons
     const renderActionIcons = (mobile = false) => (
-        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, height: '100%' }}>
             {isAdmin && (
                 <>
                     <Tooltip title="Notificaciones">
@@ -196,14 +196,16 @@ function Nav() {
     );
 
     const drawerContent = (
-        <Box sx={{ width: 280, bgcolor: '#fff', height: '100%' }} role="presentation">
-            <Box sx={{ p: 2, display: 'flex', alignItems: 'center', justifyContent: 'center', bgcolor: '#8bdf01' }}>
+        <Box sx={{ width: 280, bgcolor: '#121212', height: '100%', color: '#ffffff' }} role="presentation">
+            <Box sx={{ p: 2, display: 'flex', alignItems: 'center', justifyContent: 'center', bgcolor: '#000000', borderBottom: '1px solid #333' }}>
                 <img src="img/logo.webp" alt="Logo" style={{ height: 40 }} />
             </Box>
             
             <List component="nav" sx={{ 
-                '& .MuiListItemText-primary': { color: '#333', fontWeight: 600 },
-                '& .MuiSvgIcon-root': { color: '#8bdf01' }
+                '& .MuiListItemText-primary': { color: '#ffffff', fontWeight: 500 },
+                '& .MuiListItemText-secondary': { color: '#aaaaaa' },
+                '& .MuiSvgIcon-root': { color: '#8bdf01' },
+                '& .MuiListItemButton-root:hover': { bgcolor: 'rgba(139, 223, 1, 0.1)' }
             }}>
                 <ListItem button component={Link} to="/" onClick={handleDrawerToggle}>
                     <ListItemText primary="Inicio" />
@@ -341,7 +343,7 @@ function Nav() {
                 </div>
 
                 {/* Desktop Menu */}
-                <Box sx={{ display: { xs: 'none', md: 'flex' }, alignItems: 'center', height: '100%', flex: 1, justifyContent: 'flex-end' }}>
+                <Box sx={{ display: { xs: 'none', lg: 'flex' }, alignItems: 'center', height: '100%', flex: 1, justifyContent: 'flex-end' }}>
                     <div className="nav-1">
                         <div className="enlace enlace-show">
                             <a className="menu_link" href=""><img className="icon1" src="img/l1.webp" alt="" />Equipos de computo<img className="arrow" src="assets/arrow.svg" alt="" /></a>
@@ -393,16 +395,16 @@ function Nav() {
                         </div>
 
                         <div className="enlace">
-                            <ActionIcons mobile={false} />
+                            {renderActionIcons(false)}
                         </div>
                     </div>
                 </Box>
 
                 {/* Mobile Menu Icons & Toggle */}
-                <Box sx={{ display: { xs: 'flex', md: 'none' }, alignItems: 'center', gap: 1 }}>
-                    <ActionIcons mobile={true} />
+                <Box sx={{ display: { xs: 'flex', lg: 'none' }, alignItems: 'center', gap: 1 }}>
+                    {renderActionIcons(true)}
                     <IconButton onClick={handleDrawerToggle} sx={{ ml: 1 }}>
-                        <MenuIcon sx={{ fontSize: 30, color: '#8bdf01' }} />
+                        <MenuIcon sx={{ fontSize: 30, color: '#333' }} />
                     </IconButton>
                 </Box>
 

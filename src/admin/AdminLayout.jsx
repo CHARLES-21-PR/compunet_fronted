@@ -117,6 +117,12 @@ function AdminLayout({ children }) {
         setOpen(!open);
     };
 
+    // Responsive drawer handling
+    const [mobileOpen, setMobileOpen] = useState(false);
+    const handleDrawerToggle = () => {
+        setMobileOpen(!mobileOpen);
+    };
+
     const handleLogout = () => {
         logout();
     };
@@ -149,8 +155,17 @@ function AdminLayout({ children }) {
                         onClick={toggleDrawer}
                         sx={{
                             marginRight: '36px',
-                            ...(open && { display: 'none' }),
+                            display: { xs: 'none', md: open ? 'none' : 'block' },
                         }}
+                    >
+                        <MenuIcon />
+                    </IconButton>
+                    <IconButton
+                        color="inherit"
+                        aria-label="open drawer"
+                        edge="start"
+                        onClick={handleDrawerToggle}
+                        sx={{ mr: 2, display: { md: 'none' } }}
                     >
                         <MenuIcon />
                     </IconButton>
@@ -170,7 +185,8 @@ function AdminLayout({ children }) {
                     </Box>
                 </Toolbar>
             </AppBar>
-            <Drawer variant="permanent" open={open}>
+            {/* Desktop Drawer */}
+            <Drawer variant="permanent" open={open} sx={{ display: { xs: 'none', md: 'block' } }}>
                 <Toolbar
                     sx={{
                         display: 'flex',
@@ -220,6 +236,60 @@ function AdminLayout({ children }) {
                     </StyledListItemButton>
                 </List>
             </Drawer>
+
+            {/* Mobile Drawer */}
+            <MuiDrawer
+                variant="temporary"
+                open={mobileOpen}
+                onClose={handleDrawerToggle}
+                ModalProps={{
+                    keepMounted: true, // Better open performance on mobile.
+                }}
+                sx={{
+                    display: { xs: 'block', md: 'none' },
+                    '& .MuiDrawer-paper': { 
+                        boxSizing: 'border-box', 
+                        width: drawerWidth,
+                        backgroundColor: '#1a2035',
+                        color: '#ffffff'
+                    },
+                }}
+            >
+                <Toolbar sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', py: 2 }}>
+                    <Box 
+                        component="img"
+                        src="/img/logo.webp"
+                        alt="Compunet"
+                        sx={{ 
+                            height: 40,
+                            maxWidth: '160px',
+                            objectFit: 'contain'
+                        }}
+                    />
+                </Toolbar>
+                <Divider sx={{ borderColor: 'rgba(255,255,255,0.1)' }} />
+                <List component="nav" sx={{ mt: 2 }}>
+                    {menuItems.map((item) => (
+                        <StyledListItemButton 
+                            key={item.text}
+                            onClick={() => { navigate(item.path); handleDrawerToggle(); }}
+                            selected={location.pathname === item.path}
+                        >
+                            <ListItemIcon>
+                                {item.icon}
+                            </ListItemIcon>
+                            <ListItemText primary={item.text} />
+                        </StyledListItemButton>
+                    ))}
+                    
+                    <Divider sx={{ my: 2, borderColor: 'rgba(255,255,255,0.1)' }} />
+                    
+                    <StyledListItemButton onClick={() => navigate('/')}>
+                        <ListItemIcon><StoreIcon /></ListItemIcon>
+                        <ListItemText primary="Ir a la Tienda" />
+                    </StyledListItemButton>
+                </List>
+            </MuiDrawer>
             <Box
                 component="main"
                 sx={{

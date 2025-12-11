@@ -29,9 +29,9 @@ import {
     Visibility as VisibilityIcon,
     Delete as DeleteIcon,
     Search as SearchIcon,
-    ShoppingCart as ShoppingCartIcon,
-    CheckCircle as CheckCircleIcon,
-    FilterListOff as FilterListOffIcon
+    FilterList as FilterListIcon,
+    FileDownload as FileDownloadIcon,
+    CheckCircle as CheckCircleIcon
 } from '@mui/icons-material';
 import { styled } from '@mui/material/styles';
 import AdminLayout from './AdminLayout';
@@ -74,6 +74,7 @@ function AdminOrders() {
     const navigate = useNavigate();
     const [orders, setOrders] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [exporting, setExporting] = useState(false);
     const [searchTerm, setSearchTerm] = useState('');
     const [statusFilter, setStatusFilter] = useState('all');
     const [paymentMethodFilter, setPaymentMethodFilter] = useState('all');
@@ -116,6 +117,47 @@ function AdminOrders() {
 
     const handleSearch = (event) => {
         setSearchTerm(event.target.value);
+        setPage(0);
+    };
+
+    const handleExportExcel = async () => {
+        setExporting(true);
+        try {
+            const token = localStorage.getItem('token');
+            // Construir query params con los filtros actuales si es necesario
+            const params = new URLSearchParams();
+            if (statusFilter !== 'all') params.append('status', statusFilter);
+            if (paymentMethodFilter !== 'all') params.append('payment_method', paymentMethodFilter);
+            if (searchTerm) params.append('search', searchTerm);
+
+            const response = await fetch(`/api/orders/export?${params.toString()}`, {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                },
+            });
+
+            if (response.ok) {
+                const blob = await response.blob();
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `pedidos_${new Date().toISOString().split('T')[0]}.xlsx`;
+                document.body.appendChild(a);
+                a.click();
+                a.remove();
+            } else {
+                console.error('Error al exportar pedidos');
+                const errorData = await response.json().catch(() => ({}));
+                const errorMessage = errorData.message || 'Error desconocido del servidor';
+                alert(`Error al exportar (${response.status}): ${errorMessage}`);
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            alert('Ocurrió un error al intentar exportar.');
+        } finally {
+            setExporting(false);
+        }
     };
 
     const uniquePaymentMethods = [...new Set(orders.map(o => o.payment_method || o.paymentMethod).filter(Boolean))];
@@ -255,7 +297,7 @@ function AdminOrders() {
 
                 <Paper sx={{ mb: 3, p: 2 }}>
                     <Grid container spacing={2} alignItems="center" justifyContent="space-between">
-                        <Grid item xs={12} md={4}>
+                        <Grid xs={12} md={4}>
                             <TextField
                                 fullWidth
                                 variant="outlined"
@@ -267,7 +309,7 @@ function AdminOrders() {
                                 }}
                             />
                         </Grid>
-                        <Grid item xs={12} md={8}>
+                        <Grid xs={12} md={8}>
                             <Box sx={{ display: 'flex', gap: 2, justifyContent: { xs: 'flex-start', md: 'flex-end' }, flexWrap: 'wrap' }}>
                                 <FormControl sx={{ minWidth: 150 }} variant="outlined" size="small">
                                     <InputLabel>Estado</InputLabel>
@@ -300,12 +342,22 @@ function AdminOrders() {
                                         variant="outlined" 
                                         color="secondary" 
                                         onClick={handleClearFilters}
-                                        startIcon={<FilterListOffIcon />}
+                                        startIcon={<FilterListIcon />}
                                         size="small"
                                     >
                                         Limpiar
                                     </Button>
                                 )}
+                                <Button
+                                    variant="contained"
+                                    color="primary"
+                                    onClick={handleExportExcel}
+                                    startIcon={<FileDownloadIcon />}
+                                    size="small"
+                                    disabled={exporting}
+                                >
+                                    {exporting ? 'Exportando...' : 'Exportar a Excel'}
+                                </Button>
                             </Box>
                         </Grid>
                     </Grid>

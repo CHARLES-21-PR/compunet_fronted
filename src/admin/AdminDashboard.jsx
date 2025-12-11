@@ -112,7 +112,7 @@ function AdminDashboard() {
             {/* Stats Cards */}
             <Grid container spacing={3} sx={{ mb: 4 }}>
                 {stats.map((stat, index) => (
-                    <Grid item xs={12} sm={6} md={2} key={index}>
+                    <Grid xs={12} sm={6} md={2} key={index}>
                         <Card sx={{ height: '100%', boxShadow: '0 4px 20px rgba(0,0,0,0.05)', borderRadius: 2 }}>
                             <CardContent sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                                 <Box>
@@ -141,8 +141,8 @@ function AdminDashboard() {
 
             <Grid container spacing={2}>
                 {/* Sales Chart */}
-                <Grid item xs={12} sm={7} md={7}>
-                    <Paper sx={{ p: 3, borderRadius: 2, boxShadow: '0 4px 20px rgba(0,0,0,0.05)', height: '100%' }}>
+                <Grid xs={12} sm={7} md={7}>
+                    <Paper sx={{ p: 3, borderRadius: 2, boxShadow: '0 4px 20px rgba(0,0,0,0.05)', height: '100%', minHeight: 450 }}>
                         <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2, flexWrap: 'wrap', gap: 2 }}>
                             <Typography variant="h6" fontWeight="bold">Productos Vendidos</Typography>
                             <Box sx={{ display: 'flex', gap: 2 }}>
@@ -198,8 +198,8 @@ function AdminDashboard() {
                 </Grid>
 
                 {/* Stock Alerts */}
-                <Grid item xs={12} sm={5} md={5}>
-                    <Paper sx={{ p: 3, borderRadius: 2, boxShadow: '0 4px 20px rgba(0,0,0,0.05)', height: '100%', overflow: 'hidden' }}>
+                <Grid xs={12} sm={5} md={5}>
+                    <Paper sx={{ p: 3, borderRadius: 2, boxShadow: '0 4px 20px rgba(0,0,0,0.05)', height: '100%', overflow: 'hidden', minHeight: 450 }}>
                         <Typography variant="h6" fontWeight="bold" gutterBottom>Alertas de Stock Bajo</Typography>
                         <Divider sx={{ mb: 2 }} />
                         <TableContainer sx={{ maxHeight: 350 }}>

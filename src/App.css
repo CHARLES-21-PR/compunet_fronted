@@ -340,6 +340,10 @@ footer {
     }
 }
 @media (max-width:1164px) {
+    .navegation nav {
+        padding: 0 10px;
+    }
+    
     .d-block  {
         height:400px;
     }
