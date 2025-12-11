@@ -12,6 +12,8 @@ import CartView from './client/CartView.jsx'
 import ClientOrders from './client/ClientOrders.jsx'
 import LoginView from './views/LoginView.jsx'
 import RegisterView from './views/RegisterView.jsx'
+import StoresView from './views/StoresView.jsx'
+import InternetView from './views/InternetView.jsx'
 import AdminDashboard from './admin/AdminDashboard.jsx'
 import AdminCategories from './admin/AdminCategories.jsx'
 import AdminProducts from './admin/AdminProducts.jsx'
@@ -20,6 +22,7 @@ import AdminUsers from './admin/AdminUsers.jsx'
 import CheckoutView from './views/CheckoutView.jsx'
 import { AuthProvider } from './context/AuthContext'
 import { CartProvider } from './context/CartContext'
+import WhatsAppFloat from './components/WhatsAppFloat.jsx';
 
 function App() {
   const location = useLocation();
@@ -36,6 +39,8 @@ function App() {
           <Route path="/cart" element={<CartView />} />
           <Route path="/client/orders" element={<ClientOrders />} />
           <Route path="/checkout" element={<CheckoutView />} />
+          <Route path="/stores" element={<StoresView />} />
+          <Route path="/internet" element={<InternetView />} />
           <Route path="/login" element={<LoginView />} />
           <Route path="/register" element={<RegisterView />} />
           <Route path="/admin" element={<AdminDashboard />} />
@@ -44,6 +49,7 @@ function App() {
           <Route path="/admin/orders" element={<AdminOrders />} />
           <Route path="/admin/users" element={<AdminUsers />} />
         </Routes>
+        {!isAdminRoute && <WhatsAppFloat />}
         {!isAdminRoute && <Footer />}
       </CartProvider>
     </AuthProvider>

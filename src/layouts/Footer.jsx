@@ -1,7 +1,7 @@
 function Footer() {
     return (
         <>
-        <footer>
+        <footer id="footer">
     
         <div className="direccion">
             <div className="direc">
